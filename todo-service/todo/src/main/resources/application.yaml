@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: todo
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+  docker:
+    compose:
+      lifecycle-management: start_only
+
+logging:
+  level:
+    org:
+      springframework:
+        security: TRACE # or DEBUG
+
+
+
+todo:
+  upload:
+    path: /Users/xxxx/adaf/xxxx/todo
+
+
+
+#debug: true
