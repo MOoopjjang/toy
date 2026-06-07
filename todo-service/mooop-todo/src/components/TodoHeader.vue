@@ -1,18 +1,5 @@
 <template>
     <div>
-
-        <!-- 사이드 메뉴 -->
-        <!-- <nav class="side-menu" id="sideMenu">
-            <div class="side-header">
-                <span>메뉴</span>
-                <button class="close-btn" v-on:click="toggleSideMenu()">
-                    <span class="material-symbols-outlined">close</span>
-                </button>
-            </div>
-            <div class="side-item">Dashboard</div>
-            <div class="side-item">My Todo</div>
-            <div class="side-item">Settings</div>
-        </nav> -->
         <div class="overlay" id="overlay" v-on:click="toggleSideMenu()"></div>
         <header class="todo-header">
             <!-- 1 Line -->
@@ -38,7 +25,7 @@
 
             <!-- 2 Line -->
             <div class="header-line header-date">
-                2026년 2월 24일 (화)
+                {{ today }}
             </div>
 
             <!-- 3 Line -->
@@ -62,18 +49,22 @@ import { useRouter } from 'vue-router'
 import {headerStore} from '../store/header'
 import {memberStore} from '../store/member'
 import { AppCode } from '../code/AppCodes'
+import { dateUtil } from '../util/DateUtil'
 
 import MemberForm from './MemberForm.vue'
 
 
 const { proxy } = getCurrentInstance()
 const router = useRouter()
+
+
 const headerInfoStore = headerStore()
 const memberInfoStore = memberStore()
 
 const isMenuOpen = ref(false)
 const isMemberFormOpen = ref(false)
 const modeType=ref('MODIFY')
+const today = ref('')
 
 const toggleProfileMenu = ()=>{
     console.log(isMenuOpen.value)
@@ -149,6 +140,8 @@ onMounted(()=>{
     memberInfoApiCall()
     /** Event 수신  */
     proxy.$emitter.on('headerUpdate' , headerInfoUpdatehandler)
+
+    today.value = dateUtil.today()
 })
 
 onUnmounted(()=>{
